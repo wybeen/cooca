@@ -38,18 +38,24 @@ def callback():
 
     # handle webhook body
     try:
-        handler.handle(body, signature)
+        events = handler.parse(body, signature)
     except InvalidSignatureError:
         abort(400)
 
+    # if event is MessageEvent and message is TextMessage, then echo text
+    for event in events:
+        if not isinstance(event, MessageEvent):
+            continue
+        if not isinstance(event.message, TextMessage):
+            continue
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
+
     return 'OK'
 
-
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
 
 # A welcome message to test our server
 @app.route('/')
