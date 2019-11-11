@@ -68,7 +68,7 @@ def callback():
             
         hits = ims.get("hits")
         
-        if len(hits) == 0:
+        if len(hits) != 0:
             for hit in hits:
                 userImageURL = hit["userImageURL"]
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
