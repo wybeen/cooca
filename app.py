@@ -44,11 +44,13 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
+    imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
+            line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
             continue
 
         # line_bot_api.reply_message(
@@ -73,7 +75,6 @@ def callback():
             previewURL = hit["webformatURL"]            
             line_bot_api.reply_message(event.reply_token,ImageSendMessage(previewURL, previewURL))
         else:
-            imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
             line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
             
     return 'OK'
