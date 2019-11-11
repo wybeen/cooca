@@ -1,4 +1,5 @@
 import os
+import random
 
 from flask import Flask, request, abort
 
@@ -62,15 +63,16 @@ def callback():
             image_type='photo',
             order='popular',
             page=1,
-            per_page=3)
+            per_page=20)
             
         hits = ims.get("hits")
         
         if len(hits) != 0:
-            for hit in hits:
-                userImageURL = hit["userImageURL"]
-                print(userImageURL)
-                line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
+            r = random.randint(0,len(hits))
+            hit = hits[r]
+            userImageURL = hit["userImageURL"]
+            print(userImageURL)
+            line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
         else:
             imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
             line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
