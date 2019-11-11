@@ -24,7 +24,7 @@ if line_bot_set_key is None:
     sys.exit(1)
 
 line_bot_api = LineBotApi(line_bot_set_key)
-handler = WebhookHandler(line_bot_acc_key)
+parser = WebhookParser(line_bot_acc_key)
 
 
 @app.route("/callback", methods=['POST'])
@@ -38,7 +38,7 @@ def callback():
 
     # handle webhook body
     try:
-        events = handler.parse(body, signature)
+        events = parser.parse(body, signature)
     except InvalidSignatureError:
         abort(400)
 
