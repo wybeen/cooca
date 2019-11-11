@@ -70,9 +70,9 @@ def callback():
         if len(hits) != 0:
             r = random.randint(0,len(hits))
             hit = hits[r]
-            userImageURL = hit["userImageURL"]
-            print(userImageURL)
-            line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
+            previewURL = hit["previewURL"]
+            print(previewURL)
+            line_bot_api.reply_message(event.reply_token,ImageSendMessage(previewURL, previewURL))
         else:
             imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
             line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
