@@ -35,7 +35,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    print("Request body: " + body)
 
     # handle webhook body
     try:
@@ -60,8 +60,6 @@ def callback():
         # custom image search
         ims = image.search(q=event.message.text,
             image_type='photo',
-            category='animals',
-            safesearch='true',
             order='popular',
             page=1,
             per_page=3)
@@ -71,6 +69,7 @@ def callback():
         if len(hits) != 0:
             for hit in hits:
                 userImageURL = hit["userImageURL"]
+                print(userImageURL)
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
         else:
             imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
