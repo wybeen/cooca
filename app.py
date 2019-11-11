@@ -11,6 +11,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage,
 )
+from pixabay import Image
 
 app = Flask(__name__)
 line_bot_acc_key = os.environ.get('line_bot_acc_key', None)
@@ -53,8 +54,28 @@ def callback():
         #    event.reply_token,
         #    TextSendMessage(text=event.message.text)
         # )
-        imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
-        line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
+        pixabay_key = os.environ.get('pixabay_key')
+        # image operations
+        image = Image(pixabay_key)
+        # custom image search
+        ims = image.search(q=event.message.text,
+            image_type='photo',
+            category='animals',
+            safesearch='true',
+            order='popular',
+            page=1,
+            per_page=3)
+            
+        hits = ims.get("hits")
+        
+        if len(hits) == 0:
+            for hit in hits:
+                userImageURL = hit["userImageURL"]
+                line_bot_api.reply_message(event.reply_token,ImageSendMessage(userImageURL, userImageURL))
+        else:
+            imgurl = "https://cdn.hk01.com/di/media/images/2246786/org/3d7a7f543222c5b5f20fe142f2b35e4a.jpg/ikLi2r1cCiuwJpW3Hw7MUk90Ueb6y_TatUNPvLVDT7w"
+            line_bot_api.reply_message(event.reply_token,ImageSendMessage(imgurl, imgurl))
+            
     return 'OK'
 
 
