@@ -13,10 +13,18 @@ from linebot.models import (
 )
 
 app = Flask(__name__)
-line_bot_api_key = os.environ.get('line_bot_api')
-line_msg_set_key = os.environ.get('line_msg_set')
-line_bot_api = LineBotApi(line_bot_api_key)
-handler = WebhookHandler(line_msg_set_key)
+line_bot_acc_key = os.environ.get('line_bot_acc_key', None)
+if line_bot_acc_key is None:
+    print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
+    sys.exit(1)
+    
+line_bot_set_key = os.environ.get('line_bot_set_key', None)
+if line_bot_set_key is None:
+    print('Specify LINE_CHANNEL_SECRET as environment variable.')
+    sys.exit(1)
+
+line_bot_api = LineBotApi(line_bot_set_key)
+handler = WebhookHandler(line_bot_acc_key)
 
 
 @app.route("/callback", methods=['POST'])
