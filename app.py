@@ -7,6 +7,7 @@ import os
 import sys
 import tempfile
 import random
+import requests as req
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -91,7 +92,7 @@ def handle_text_message(event):
 def handle_postback(event):
     print("event.postback.data:" + event.postback.data)
     if event.postback.data == 'action=quiz':
-        results = get('https://opentdb.com/api.php?amount=1&category=22&type=multiple').json()
+        results = req.get('https://opentdb.com/api.php?amount=1&category=22&type=multiple').json()
         result = results["results"][0]
         question = result["question"]
         actionary = []
