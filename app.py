@@ -51,7 +51,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    print("Request body: " + body)
 
     # handle webhook body
     try:
@@ -72,7 +72,7 @@ def handle_text_message(event):
     if (event.reply_token ==  '00000000000000000000000000000000'):
         return None
     text = event.message.text
-
+    print(text)
     if text == 'profile':
         if isinstance(event.source, SourceUser):
             profile = line_bot_api.get_profile(event.source.user_id)
@@ -89,7 +89,8 @@ def handle_text_message(event):
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-    if event.postback.data == 'quiz':
+    print("event.postback.data:" + event.postback.data)
+    if event.postback.data == 'action=quiz':
         results = get('https://opentdb.com/api.php?amount=1&category=22&type=multiple').json()
         result = results["results"][0]
         question = result["question"]
