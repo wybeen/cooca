@@ -108,12 +108,13 @@ def handle_postback(event):
         template_message = TemplateSendMessage(alt_text=question, template=buttons_template)
         line_bot_api.reply_message(event.reply_token, template_message)
 
+# A welcome message to test our server
+@app.route('/')
+def index():
+    return "<h1>Welcome to Cooca !!</h1>"
 
 if __name__ == "__main__":
-    # create tmp dir for download content
-    make_static_tmp_dir()
-
-    app.run(debug=True, port=50000, host = '0.0.0.0',ssl_context ='adhoc')
+    app.run()
 
 
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may
