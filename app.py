@@ -73,8 +73,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-	if (event.reply_token ==  '00000000000000000000000000000000'):
-		return None
+    if (event.reply_token ==  '00000000000000000000000000000000'):
+        return None
     text = event.message.text
 
     if text == 'profile':
