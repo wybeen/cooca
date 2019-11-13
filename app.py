@@ -20,8 +20,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
     SourceUser, SourceGroup, SourceRoom,
-    TemplateSendMessage, MessageAction,
-    ButtonsTemplate, URIAction, PostbackAction, DatetimePickerAction, PostbackEvent
+    TemplateSendMessage, ButtonsTemplate, URIAction, PostbackAction, DatetimePickerAction, MessageAction, PostbackEvent
 )
 
 app = Flask(__name__)
