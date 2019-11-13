@@ -21,7 +21,7 @@ from linebot.models import (
     MessageAction
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, PostbackEvent
+    MessageEvent, TextMessage, TextSendMessage, PostbackEvent,
     SourceUser, SourceGroup, SourceRoom,
     TemplateSendMessage, ButtonsTemplate
 )
