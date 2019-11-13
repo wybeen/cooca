@@ -6,6 +6,7 @@ import errno
 import os
 import sys
 import tempfile
+import random
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -99,8 +100,8 @@ def handle_postback(event):
         question = result["question"]
         actionary = []
         cnt = len(result["incorrect_answers"])
-        r = random.randint(0,cnt)
-        for x in range(cnt)
+        r = random.randint(0,cnt - 1)
+        for x in range(cnt):
             if r==x:
                 actionary.add(MessageAction(label=result["correct_answer"], text='答案是 ' + result["correct_answer"]+', 我答對了, 請給我拍拍手.'))
             actionary.add(MessageAction(label=result["incorrect_answers"][x], text='答案不是 ' + result["incorrect_answers"][x] + ', 我錯了 orz'))
