@@ -100,8 +100,8 @@ def handle_postback(event):
         r = random.randint(0,cnt - 1)
         for x in range(cnt):
             if r==x:
-                actionary.add(MessageAction(label=result["correct_answer"], text='答案是 ' + result["correct_answer"]+', 我答對了, 請給我拍拍手.'))
-            actionary.add(MessageAction(label=result["incorrect_answers"][x], text='答案不是 ' + result["incorrect_answers"][x] + ', 我錯了 orz'))
+                actionary.append(MessageAction(label=result["correct_answer"], text='答案是 ' + result["correct_answer"]+', 我答對了, 請給我拍拍手.'))
+            actionary.append(MessageAction(label=result["incorrect_answers"][x], text='答案不是 ' + result["incorrect_answers"][x] + ', 我錯了 orz'))
         buttons_template = ButtonsTemplate(title=result["category"] + ' - ' + result["difficulty"], text=question, actions=actionary)
         template_message = TemplateSendMessage(alt_text=question, template=buttons_template)
         line_bot_api.reply_message(event.reply_token, template_message)
