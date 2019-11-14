@@ -18,11 +18,6 @@ from linebot import (
 from linebot.exceptions import (
     LineBotApiError, InvalidSignatureError
 )
-"""
-from linebot.models import (
-    MessageAction
-)
-"""
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, PostbackEvent,
     SourceUser, SourceGroup, SourceRoom,
@@ -43,7 +38,6 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
-
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -112,6 +106,10 @@ def handle_postback(event):
 @app.route('/')
 def index():
     return "<h1>Welcome to Cooca !!</h1>"
+    
+@app.route('/cafe-nomad')
+def index():
+    return render_template('cafe-nomad')
 
 if __name__ == "__main__":
     app.run()
