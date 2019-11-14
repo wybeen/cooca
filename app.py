@@ -109,7 +109,7 @@ def index():
     
 @app.route('/cafe-nomad')
 def cafenomad():
-    return render_template('cafe-nomad')
+    return render_template('cafe-nomad.html')
 
 if __name__ == "__main__":
     app.run()
