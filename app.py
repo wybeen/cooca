@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-
+import html
 import errno
 import os
 import sys
@@ -73,7 +73,6 @@ def handle_text_message(event):
     if (event.reply_token ==  '00000000000000000000000000000000'):
         return None
     text = event.message.text
-    print(text)
     if text == 'profile':
         if isinstance(event.source, SourceUser):
             profile = line_bot_api.get_profile(event.source.user_id)
@@ -94,16 +93,16 @@ def handle_postback(event):
     if event.postback.data == 'action=quiz':
         results = req.get('https://opentdb.com/api.php?amount=1&type=multiple').json()
         result = results["results"][0]
-        button_title = result["category"] + ' - ' + result["difficulty"]
-        question = button_title + '\n' + result["question"]
+        button_title = result["category"] + '\n' + result["difficulty"]
+        question = button_title + '\n' + html.unescape(result["question"])
         actionary = []
         cnt = len(result["incorrect_answers"])
         r = random.randint(0,cnt - 1)
         for x in range(cnt):
             if r==x:
-                ans = result["correct_answer"][:20]
+                ans = html.unescape(result["correct_answer"])[:20]
                 actionary.append({"type":"message", "label": ans, "text":('答案是 ' + ans + ', 我答對了, 請給我拍拍手.')})
-            ans = result["incorrect_answers"][x][:20]
+            ans = html.unescape(result["incorrect_answers"][x])[:20]
             actionary.append({"type":"message", "label":ans, "text":('答案不是 ' + ans + ', 我錯了 orz')})
         buttons_template = ButtonsTemplate(text=question, actions=actionary)
         template_message = TemplateSendMessage(alt_text=question, template=buttons_template)
