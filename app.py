@@ -108,7 +108,7 @@ def index():
     return "<h1>Welcome to Cooca !!</h1>"
     
 @app.route('/cafe-nomad')
-def index():
+def cafenomad():
     return render_template('cafe-nomad')
 
 if __name__ == "__main__":
