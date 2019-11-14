@@ -92,17 +92,20 @@ def handle_text_message(event):
 def handle_postback(event):
     print("event.postback.data:" + event.postback.data)
     if event.postback.data == 'action=quiz':
-        results = req.get('https://opentdb.com/api.php?amount=1&category=22&type=multiple').json()
+        results = req.get('https://opentdb.com/api.php?amount=1&type=multiple').json()
         result = results["results"][0]
-        question = result["question"]
+        question = result["question"][:60]
         actionary = []
         cnt = len(result["incorrect_answers"])
         r = random.randint(0,cnt - 1)
         for x in range(cnt):
             if r==x:
-                actionary.append({"type":"message", "label":result["correct_answer"], "text":('答案是 ' + result["correct_answer"]+', 我答對了, 請給我拍拍手.')})
-            actionary.append({"type":"message", "label":result["incorrect_answers"][x], "text":('答案不是 ' + result["incorrect_answers"][x] + ', 我錯了 orz')})
-        buttons_template = ButtonsTemplate(title=result["category"] + ' - ' + result["difficulty"], text=question, actions=actionary)
+                ans = result["correct_answer"][:20]
+                actionary.append({"type":"message", "label": ans, "text":('答案是 ' + ans + ', 我答對了, 請給我拍拍手.')})
+            ans = result["incorrect_answers"][x][:20]
+            actionary.append({"type":"message", "label":ans, "text":('答案不是 ' + ans + ', 我錯了 orz')})
+        button_title = result["category"] + ' - ' + result["difficulty"]
+        buttons_template = ButtonsTemplate(title=button_title[:40],thumbnailImageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Bombeta_de_Llum.JPG/320px-Bombeta_de_Llum.JPG", text=question, actions=actionary)
         template_message = TemplateSendMessage(alt_text=question, template=buttons_template)
         line_bot_api.reply_message(event.reply_token, template_message)
 
