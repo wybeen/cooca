@@ -109,8 +109,8 @@ def index():
     
 @app.route('/cafe-nomad')
 def cafenomad():
-    cafe-nomad-liffId = os.environ.get('cafe-nomad-liffId', '')
-    return render_template('cafe-nomad.html', thisLiffId=cafe-nomad-liffId)
+    cafe_nomad_liffId = os.environ.get('cafe-nomad-liffId', '')
+    return render_template('cafe-nomad.html', thisLiffId=cafe_nomad_liffId)
 
 if __name__ == "__main__":
     app.run()
