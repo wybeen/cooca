@@ -24,7 +24,9 @@ from linebot.models import (
     TemplateSendMessage, ButtonsTemplate
 )
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='')
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.environ.get('line_bot_acc_key', None)
